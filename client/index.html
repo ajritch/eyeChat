@@ -2,34 +2,283 @@
 <html lang = 'en' ng-app = 'app'>
 	<head>
 		<meta charset = 'UTF-8'>
-		<title>MEAN Mini Store</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width">
+		<title></title>
+
+		<link rel = 'stylesheet' type = 'text/css' href = '/static/css/index-style.css'>
 
 		<!-- Angular -->
 		<script type = 'text/javascript' src = 'angular/angular.js'></script>
 		<script type = 'text/javascript' src = 'angular-route/angular-route.js'></script>
 
-		<!-- Module, Factories, Controllers -->
-		<script type = 'text/javascript' src = 'js/config/routes.js'>
-		</script>
-		<script type = 'text/javascript' src = 'js/factories/customerFactory.js'></script>
-		<script type = 'text/javascript' src = 'js/factories/productFactory.js'></script>
-		<script type = 'text/javascript' src = 'js/factories/orderFactory.js'></script>
-		<script type = 'text/javascript' src = 'js/controllers/CustomersController.js'></script>
-		<script type = 'text/javascript' src = 'js/controllers/ProductsController.js'></script>
-		<script type = 'text/javascript' src = 'js/controllers/OrdersController.js'></script>
-		<script type = 'text/javascript' src = 'js/controllers/DashboardsController.js'></script>
+		<!-- JQuery -->
+		<script type = 'text/javascript' src = 'jquery/dist/jquery.min.js'></script>
 
+		<script type = 'text/javascript'>
+			$(document).ready(function() {
+				//use button to simulate a blink
+				$('button').click(function() {
+					handle_blink();
+				});
+				//start blink handler a few seconds after the page loads
+				setTimeout(handle_blink, 4000);
+			})
+		</script>
+
+
+		<!-- Module, Factories, Controllers -->
+		<script type = 'text/javascript' src = 'js/config/config.js'></script>
+		<script type = 'text/javascript' src = 'js/factories/socketFactory.js'></script>
+		<script type = 'text/javascript' src = 'js/controllers/chatController.js'></script>
+
+
+		<style>
+			html, body { margin:0; padding:0;}
+
+			video, canvas { display: inline-block; border: 1px solid #000; }
+			#diff { border: 1px solid #000; }
+
+			.dg.main.a { margin-right: 200px; !important}
+
+			#outline { position:absolute; border: 1px solid #ff0000; width:100px; height:100px; top:70px; left: 110px;}
+
+			video, #outline { display:none; }
+		</style>
 
 	</head>
 	<body>
-		<div>
-			<a href = '#/'>Dashboard</a>
-			| <a href = '#/products'>Products</a>
-			| <a href = '#/orders'>Orders</a>
-			| <a href = '#/customers'>Customers</a>
-			| <a href = '#/settings'>Settings</a>
-			<div ng-view>
-			</div>
+		<video id="video" width="320"  height="240"></video>
+
+		<style>
+			#head, #diff {visibility: hidden;}
+		</style>
+		<!-- <canvas id = 'display_video' width = '320' height = '240'></canvas> -->
+		<canvas id="out" width="100" height="100"></canvas>
+    	<canvas id="head" width="320" height="240"></canvas>
+		<!-- Monitoring canvas and audio -->  
+    	<canvas id="diff" width="100" height="100"></canvas>
+
+
+    
+
+    	<div id="outline"></div>
+  		<audio id="audio" src="static/Metal_Hit.ogg"></audio>
+  	
+  		<script src = '/js/blink-detect/action_handler.js'></script>
+		<script src="/js/blink-detect/blinktracker.js"></script>
+		<script src="/js/blink-detect/headtrackr.js"></script>
+
+		<script type="text/javascript" src="/js/blink-detect/dat.gui.min.js"></script>
+
+		<script>
+			document.addEventListener('DOMContentLoaded', function(){
+
+				console.log("DOMContentLoaded");
+
+				navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+				window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+
+				var video = document.getElementById('video'),
+				options = {audio: false, video:true};
+
+				if (navigator.getUserMedia){
+					navigator.getUserMedia(options, v_success, v_error);
+				} else {
+					not_supported();
+				}
+
+				function not_supported() {
+					video.innerHTML = "<source src=\""+webmvideo+"\" type=\"video\/webm\" ><\/source> <source src=\""+mp4video+"\" type=\"video\/mp4\" ><\/source>";
+					video.muted= true;        
+					// setInterval(copyVideoToCanvas, 100);
+				}
+
+				function v_success(stream) {
+					if (video.mozCaptureStream) { // Needed to check for Firefox
+						video.mozSrcObject = stream;
+					} else {
+						video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
+					}
+					// video.play();
+
+					console.log("video meta data?: " + video.onloadedmetadata, video.loadedmetadata);
+
+	    			video.onloadedmetadata = function(e) {
+						console.log("video.onloadedmetadata");
+						video.play();
+						blink_processor.onLoad();
+					};
+
+				    video.addEventListener('loadedmetadata', function(e){
+				    	console.log("video loadedmetadata");
+				    	video.play();
+				    	blink_processor.onLoad();
+
+				    });
+	  			}
+
+				function v_error(error) {
+			    	console.log("Error! Error code is:"+error.code);
+			    	video.innerHTML = "<source src=\""+webmvideo+"\" type=\"video\/webm\" ><\/source> <source src=\""+mp4video+"\" type=\"video\/mp4\" ><\/source>";
+			    	video.muted= true;
+			    }
+
+		});
+
+		</script>
+
+
+		<script type="text/javascript">
+			var FizzyText = function() {
+				this.eyeDiffTolerance = 25;
+				this.tolerance = 15;
+				this.recalibrationTolerance = 10;
+				this.playSound = false;
+			};
+
+			// window.onload = function() {
+			// 	var text = new FizzyText();
+			// 	var gui = new dat.GUI();
+		  
+			// 	var eController = gui.add(text, 'eyeDiffTolerance', 1, 100);
+			// 	var tController = gui.add(text, 'tolerance', 10, 30);
+
+			// 	var rController = gui.add(text, 'recalibrationTolerance', 1, 40);
+			// 	var aController = gui.add(text, 'playSound');
+
+			// 	var self = this;
+
+			// 	eController.onFinishChange( function(value)  {
+		 //    		console.log("eyeDiff controller: " + value);
+		 //    		blink_processor.setEyeDiffTolerance ( Math.round(value) );
+			// 	});
+
+			// 	tController.onFinishChange( function(value)  {
+		 //    		console.log("tolerance controller: " + value);
+		 //    		blink_processor.setTolerance( Math.round(value) );
+			// 	});
+
+			// 	rController.onFinishChange( function(value)  {
+		 //    		console.log("head move tolerance controller: " + value);
+		 //    		blink_processor.setRecalibrationTolerance( Math.round(value) );
+			// 	});
+
+			// 	aController.onFinishChange( function(value)  {
+		 //    		console.log("audio controller: " + value);
+		 //    		// processor.setTolerance( Math.round(value) );
+		 //    		blink_processor.setHasAudio( value );
+			// 	});
+
+			// };
+		    
+		</script>
+
+		<script type="text/javascript">
+			var videoInput = document.getElementById('video');
+			var canvasInput = document.getElementById('head');
+			var canvasInput2 = document.getElementById('display_video');
+
+			var isMovable = true;
+
+			var htracker = new headtrackr.Tracker( { debug: canvasInput, calcAngles: false } );
+			htracker.init(videoInput, canvasInput);
+			htracker.start();
+
+			// var htracker2 = new headtrackr.Tracker( { debug: canvasInput2, calcAngles: false } );
+			// htracker2.init(videoInput, canvasInput2);
+			// htracker2.start();
+
+
+
+			document.addEventListener('facetrackingEvent', function (event) {
+			    //if(isMovable == false) return;
+			    // console.log( event.x, event.y, event.width, event.height );
+			    // processor.videoX = 100;//event.x;
+			    // processor.videoY = 50;//event.y;
+			    // processor.videoWidth = 100;//event.width;
+			    // processor.videoHeight = 100;//event.height;
+
+			    blink_processor.setSizeAndLocation( event );
+			    // isMovable = false;
+			    // setTimeout(function(){
+			    //   console.log("setTimeout: " + this, self);
+			    //   self.isMovable = true;
+			    //   console.log("isMovable: " + self.isMovable, processor.getCalibrationTime());
+			    // },processor.getCalibrationTime());
+
+			});
+		</script>
+
+		<br>
+		<button>Blink</button>
+
+		<h3 id = 'building_word'></h3>
+		<div ng-controller = 'chatController'>
+			<table id = 'letter_grid'>
+				<tbody>
+					<tr class = 'row'>
+						<td id = 'backspace-btn' class = 'action'>Backspace</td>
+						<td id = 'space-btn' class = 'action'>Space</td>
+						<td id = 'clear-btn' class = 'action'>Clear</td>
+						<td id = 'yes-btn' class = 'action'>YES</td>
+						<td id = 'no-btn' class = 'action last'>NO</td>
+					</tr>
+					<tr class = 'row'>
+						<td>A</td>
+						<td>B</td>
+						<td>C</td>
+						<td>D</td>
+						<td>.</td>
+						<td class = 'last'>?</td>
+					</tr>
+					<tr class = 'row'>
+						<td>E</td>
+						<td>F</td>
+						<td>G</td>
+						<td>H</td>
+						<td>!</td>
+						<td class = 'last'>: )</td>
+					</tr>
+					<tr class = 'row'>
+						<td>I</td>
+						<td>J</td>
+						<td>K</td>
+						<td>L</td>
+						<td>M</td>
+						<td class = 'last'>N</td>
+					</tr>
+					<tr class = 'row'>
+						<td>O</td>
+						<td>P</td>
+						<td>Q</td>
+						<td>R</td>
+						<td>S</td>
+						<td class = 'last'>T</td>
+					</tr>
+					<tr class = 'row'>
+						<td>U</td>
+						<td>V</td>
+						<td>W</td>
+						<td>X</td>
+						<td>Y</td>
+						<td class = 'last'>Z</td>
+					</tr>
+					<tr class = 'row last'>
+						<td id = 'submit-btn' class = 'action'>Submit</td>
+						<td class = 'action last'>Keep Writing</td>
+					</tr>
+
+
+				</tbody>
+			</table>
 		</div>
+
+
+
+
+
+
+
 	</body>
 </html>

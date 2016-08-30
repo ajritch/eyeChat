@@ -1,0 +1,23 @@
+#letter_grid td {
+	height: 40px;
+	width: 100px;
+	border: 1px solid #000;
+}
+
+.highlight_row {
+	 background: #249090;
+}
+
+.highlight_cell {
+	background: #23e6ff;
+}
+td {
+	color: #000;
+	font-weight: bold;
+	text-align: center;
+}
+#building_word {
+	width: 200px;
+	height: 40px;
+	border: 1px solid #000;
+}
