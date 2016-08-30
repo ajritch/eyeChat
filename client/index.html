@@ -19,7 +19,11 @@
 			$(document).ready(function() {
 				//use button to simulate a blink
 				$('button').click(function() {
-					handle_blink();
+					if (highlight_row != undefined && rowblink) {
+		                handle_blink();
+		            } else if (highlight_cell != undefined && !rowblink) {
+		                handle_blink();
+		            }
 				});
 				//start blink handler a few seconds after the page loads
 				setTimeout(handle_blink, 4000);
@@ -272,6 +276,8 @@
 
 				</tbody>
 			</table>
+
+			<textarea id = 'chats'></textarea>
 		</div>
 
 

@@ -305,7 +305,12 @@ var blink_processor = {
 
         //blink handling from action_handler.js
         if (blink_mode) {
-            handle_blink();
+            //blinking on a row
+            if (highlight_row != undefined && rowblink) {
+                handle_blink();
+            } else if (highlight_cell != undefined && !rowblink) {
+                handle_blink();
+            }
         }
 
         

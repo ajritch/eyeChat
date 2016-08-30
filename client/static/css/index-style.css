@@ -21,3 +21,7 @@ td {
 	height: 40px;
 	border: 1px solid #000;
 }
+#chats, table {
+	display: inline-block;
+	vertical-align: top;
+}

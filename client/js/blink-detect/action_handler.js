@@ -2,8 +2,11 @@ var cell_loop; //interval to loop through all cells in a row
 var row_loop; //interval to loop through all rows in table
 var highlight_row; //row currently highlighted
 var highlight_cell; //cell currently highlighted
+var rowblink = false; //true if current blink expects landing on row
+var last_blink; //time of previous blink
 
-var blink_mode = false; //true if blinking turned on
+var blink_mode = true; //true if blinking turned on
+
 
 //clear whatever loop interval was happily going on
 clearInterval(row_loop);
@@ -15,6 +18,7 @@ const INTERVAL = 1200;
 
 
 var handle_blink = function() {
+    rowblink = !rowblink;
     //loop through to highlight rows
     if (highlight_row == undefined) {
         //only loop if we don't have a row
