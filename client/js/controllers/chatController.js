@@ -31,7 +31,12 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message});
 		
 		$scope.message = '';
+		//clear out previous building_word
+		$('#building_word').html('');
+
 		//reestablish the looping! and un-highlight!
+		$(highlight_row).toggleClass('highlight_row');
+        $(highlight_cell).toggleClass('highlight_cell');
 		highlight_row = undefined;
 	    highlight_cell = undefined;
 	    rowblink = true;
