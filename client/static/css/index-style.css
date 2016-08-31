@@ -126,3 +126,10 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+
+.italics_name {
+	font-style: italic;
+}
+.bold_name {
+	font-weight: bold;
+}

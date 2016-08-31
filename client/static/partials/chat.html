@@ -79,7 +79,13 @@
 		<div id='chats' class="col-md-3">
 			<!-- <h3>Chat</h3> -->
 			<!-- <textarea class="textarea" id = 'chats'>Welcome to eyeChat! You're the first person here.<p>yo</p></textarea> -->
-			<p ng-repeat = 'message in messages' ng-bind = message.chat></p>
+			<p ng-repeat = 'message in messages track by $index'>
+				<span class = 'italics_name' ng-if = 'message.alert' ng-bind = 'message.alert'></span>
+				<span ng-if = 'message.name'>
+					<span class = 'bold_name' ng-bind = 'message.name'></span>:
+					<span ng-bind = 'message.chat'></span>
+				</span>
+			</p>
 		</div>
 	
 	</div> <!--end row-->
