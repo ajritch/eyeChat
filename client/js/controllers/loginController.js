@@ -1,4 +1,4 @@
-app.controller('loginController', function($scope, $location, userFactory, socketFactory) {
+app.controller('loginController', function($scope, $location, userFactory) {
 
 	//re-establish the looping!
 	highlight_row = undefined;
@@ -17,8 +17,8 @@ app.controller('loginController', function($scope, $location, userFactory, socke
 		//update username in factory
 		userFactory.login($scope.username);
 		
-		//send username to server
-		socketFactory.emit('add_new_user', {'name': $scope.username});
+		//send username to server via sockets in chatController
+		
 		//redirect to chat partial
 		$location.path('/chat');
 		$scope.username = '';
