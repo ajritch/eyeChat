@@ -39,9 +39,21 @@ var handle_blink = function() {
                 switch(action) {
                     case 'backspace-btn':
                         var wordStr = $('#building_word').html();
-                        console.log(wordStr);
-                        wordStr = wordStr.substring(0, wordStr.length - 1);
-                        $('#building_word').html(wordStr);
+                        console.log(wordStr,'oiawejfowif');
+                        var PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/g;
+                        var value = wordStr.substring(wordStr.length-10,wordStr.length);
+                        console.log(value,'value')
+                        var matches = value.match(PATTERN);
+                        if(matches){
+                            console.log('in if statement')
+                            wordStr = wordStr.substring(0,wordStr.length-10);
+                            console.log('after backspace in if statement',wordStr);
+                            $('#building_word').html(wordStr);
+                        } else {
+                            console.log(wordStr);
+                            wordStr = wordStr.substring(0, wordStr.length - 1);
+                            $('#building_word').html(wordStr);
+                        }
                         break;
                     case 'clear-btn':
                         $('#building_word').html('');
