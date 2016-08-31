@@ -6,11 +6,16 @@
 		<meta name="viewport" content="width=device-width">
 		<title></title>
 
+		<!--Bootstrap -->
+		<link rel = 'stylesheet' type = 'text/css' href = 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+
 		<link rel = 'stylesheet' type = 'text/css' href = '/static/css/index-style.css'>
 
 		<!-- Angular -->
 		<script type = 'text/javascript' src = 'angular/angular.js'></script>
 		<script type = 'text/javascript' src = 'angular-route/angular-route.js'></script>
+		<!-- ng-chatbox experiment -->
+		<script src="./../node_modules/ng-chatbox/build/chatbox.min.js"></script>
 
 		<!-- JQuery -->
 		<script type = 'text/javascript' src = 'jquery/dist/jquery.min.js'></script>
@@ -51,20 +56,34 @@
 		</style>
 
 	</head>
-	<body>
-		<video id="video" width="320"  height="240"></video>
-
-		<style>
-			#head, #diff {visibility: hidden;}
-		</style>
-		<!-- <canvas id = 'display_video' width = '320' height = '240'></canvas> -->
-		<canvas id="out" width="100" height="100"></canvas>
-    	<canvas id="head" width="320" height="240"></canvas>
-		<!-- Monitoring canvas and audio -->  
-    	<canvas id="diff" width="100" height="100"></canvas>
-
-
-    
+	<body class="container-fluid">
+		<!-- <div class="page-header">
+		  <h1>eyeChat <small>Welcome, {{name}}</small></h1>
+		</div> -->
+		<div class="row">
+			<div class='col-sm-1'>
+				<button class="btn btn-success">Blink</button>
+			</div>
+			<div class='col-sm-2 col-sm-offset-4'>
+				<h1>eyeChat</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class='col-md-3'>
+				
+				<video id="video" width="320"  height="240"></video>
+				
+				<style>
+					#head, #diff {visibility: hidden;}
+				</style>
+				<!-- <canvas id = 'display_video' width = '320' height = '240'></canvas> -->
+				<canvas id="out" width="100" height="100"></canvas>
+		    	<canvas id="head" width="320" height="220"></canvas>
+				<!-- Monitoring canvas and audio -->  
+		    	<canvas id="diff" width="100" height="100"></canvas>
+		    	
+		    </div> <!-- end video box -->
+			
 
     	<div id="outline"></div>
   		<audio id="audio" src="static/Metal_Hit.ogg"></audio>
@@ -215,69 +234,80 @@
 		</script>
 
 		<br>
-		<button>Blink</button>
-
-		<h3 id = 'building_word'></h3>
-		<div ng-controller = 'chatController'>
-			<table id = 'letter_grid'>
-				<tbody>
-					<tr class = 'row'>
-						<td id = 'backspace-btn' class = 'action'>Backspace</td>
-						<td id = 'space-btn' class = 'action'>Space</td>
-						<td id = 'clear-btn' class = 'action'>Clear</td>
-						<td id = 'yes-btn' class = 'action'>YES</td>
-						<td id = 'no-btn' class = 'action last'>NO</td>
-					</tr>
-					<tr class = 'row'>
-						<td>A</td>
-						<td>B</td>
-						<td>C</td>
-						<td>D</td>
-						<td>.</td>
-						<td class = 'last'>?</td>
-					</tr>
-					<tr class = 'row'>
-						<td>E</td>
-						<td>F</td>
-						<td>G</td>
-						<td>H</td>
-						<td>!</td>
-						<td class = 'last'>: )</td>
-					</tr>
-					<tr class = 'row'>
-						<td>I</td>
-						<td>J</td>
-						<td>K</td>
-						<td>L</td>
-						<td>M</td>
-						<td class = 'last'>N</td>
-					</tr>
-					<tr class = 'row'>
-						<td>O</td>
-						<td>P</td>
-						<td>Q</td>
-						<td>R</td>
-						<td>S</td>
-						<td class = 'last'>T</td>
-					</tr>
-					<tr class = 'row'>
-						<td>U</td>
-						<td>V</td>
-						<td>W</td>
-						<td>X</td>
-						<td>Y</td>
-						<td class = 'last'>Z</td>
-					</tr>
-					<tr class = 'row last'>
-						<td id = 'submit-btn' class = 'action'>Submit</td>
-						<td class = 'action last'>Keep Writing</td>
-					</tr>
-
-
-				</tbody>
-			</table>
-
-			<textarea id = 'chats'></textarea>
+		
+		
+		<div ng-controller = 'chatController' class="continaer-fluid">
+			<div class="row">
+				<div class="col-md-5" id="keyboard">
+						<p><label>Instructions: </label></p> 
+						<p>Blink your eyes to select a row. Blink again to select a letter. Finally, blink to submit to chat.</p>
+					
+						<h3 id = 'building_word'></h3>
+					
+					<table class="table" id = 'letter_grid'>
+						<tbody>
+							<tr class = 'row'>
+								<td id = 'backspace-btn' class = 'action'>&#9166;</td>
+								<td id = 'space-btn' class = 'action'>Space</td>
+								<td id = 'clear-btn' class = 'action'>Clear</td>
+								<td id = 'yes-btn' class = 'action'>YES</td>
+								<td id = 'no-btn' class = 'action last'>NO</td>
+							</tr>
+							<tr class = 'row'>
+								<td>A</td>
+								<td>B</td>
+								<td>C</td>
+								<td>D</td>
+								<td>.</td>
+								<td class = 'last'>?</td>
+							</tr>
+							<tr class = 'row'>
+								<td>E</td>
+								<td>F</td>
+								<td>G</td>
+								<td>H</td>
+								<td>!</td>
+								<td class = 'last'>&#128522;</td>
+							</tr>
+							<tr class = 'row'>
+								<td>I</td>
+								<td>J</td>
+								<td>K</td>
+								<td>L</td>
+								<td>M</td>
+								<td class = 'last'>N</td>
+							</tr>
+							<tr class = 'row'>
+								<td>O</td>
+								<td>P</td>
+								<td>Q</td>
+								<td>R</td>
+								<td>S</td>
+								<td class = 'last'>T</td>
+							</tr>
+							<tr class = 'row'>
+								<td>U</td>
+								<td>V</td>
+								<td>W</td>
+								<td>X</td>
+								<td>Y</td>
+								<td class = 'last'>Z</td>
+							</tr>
+							<tr class = 'row last'>
+								<td id = 'submit-btn' class = 'action'>Submit</td>
+								<td class = 'action last'>Keep Writing</td>
+							</tr>
+				
+						</tbody>
+					</table>
+				</div>
+				<div id='chatbox' class="col-md-3">
+					<!-- <ng-chatbox ng-model="messages"></ng-chatbox> -->
+					<!-- <h3>Chat</h3> -->
+					<textarea class="textarea" id = 'chats'>Welcome to eyeChat! You're the first person here.</textarea>
+				</div>
+			
+			</div> <!--end row-->
 		</div>
 
 
