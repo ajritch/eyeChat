@@ -23,9 +23,27 @@ var server = app.listen(7000, function() {
 //all the socket things
 var io = require('socket.io').listen(server);
 
+var messages = [];
+var users = [];
+
 io.sockets.on('connection', function(socket) {
 	console.log('connected to', socket.id);
-	socket.on('test', function(data) {
-		console.log(data.name);
+
+	//new user has logged in
+	socket.on('add_new_user', function(data) {
+		// console.log(data.name);
+		users.push({'name': data.name, 'id': socket.id});
+		socket.emit('hello_new_user', {'name': data.name, 'messages': messages});		
 	});
+
+	//new user wants all previous messages
+	socket.on('give_me_messages', function(data) {
+		socket.emit('all_messages', {'messages': messages});
+	})
+
+	//a new chat has been submitted
+	socket.on('add_new_chat', function(data) {
+		messages.push({'name': data.name, 'chat': data.chat});
+		io.emit('all_messages', {'messages': messages});
+	})
 })
