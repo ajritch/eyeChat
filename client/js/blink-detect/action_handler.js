@@ -3,7 +3,6 @@ var row_loop; //interval to loop through all rows in table
 var highlight_row; //row currently highlighted
 var highlight_cell; //cell currently highlighted
 var rowblink = false; //true if current blink expects landing on row
-var last_blink; //time of previous blink
 
 var blink_mode = true; //true if blinking turned on
 
@@ -35,7 +34,7 @@ var handle_blink = function() {
             if ($(highlight_cell).attr('class').includes('action')) {
                 //do the action
                 var action = $(highlight_cell).attr('id');
-                console.log(action);
+                // console.log(action);
                 switch(action) {
                     case 'backspace-btn':
                         var wordStr = $('#building_word').html();
@@ -55,6 +54,9 @@ var handle_blink = function() {
                         $('#building_word').append('NO');
                         break;
                     case 'submit-btn':
+                        //force click hidden submit button
+                        $('#hidden-submit-btn').click();
+                        return;
                         break;
                     default:
                         break;

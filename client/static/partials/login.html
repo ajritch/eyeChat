@@ -1,0 +1,58 @@
+<div ng-controller = 'loginController'>
+	<h2>Please enter your name!</h2>
+
+	<form id = 'login_form' ng-submit = 'login()'>
+		<h3 id = 'building_word'></h3>
+		<input type = 'submit' id = 'hidden-submit-btn' hidden>
+	</form>
+	<table id = 'letter_grid'>
+		<tbody>
+			<tr class = 'row'>
+				<td id = 'backspace-btn' class = 'action'>Backspace</td>
+				<td id = 'submit-btn' class = 'action'>Submit</td>
+				<td id = 'space-btn' class = 'action'>Space</td>
+				<td id = 'clear-btn' class = 'action '>Clear</td>
+				<td class = 'action last'>Keep Writing</td>
+			</tr>
+			<tr class = 'row'>
+				<td>A</td>
+				<td>B</td>
+				<td>C</td>
+				<td>D</td>
+				<td>E</td>
+				<td class = 'last'>F</td>
+			</tr>
+			<tr class = 'row'>
+				<td>G</td>
+				<td>H</td>
+				<td>I</td>
+				<td>J</td>
+				<td>K</td>
+				<td class = 'last'>L</td>
+			</tr>
+			<tr class = 'row'>
+				<td>M</td>
+				<td>N</td>
+				<td>O</td>
+				<td>P</td>
+				<td>Q</td>
+				<td class = 'last'>R</td>
+			</tr>
+			<tr class = 'row'>
+				<td>S</td>
+				<td>T</td>
+				<td>U</td>
+				<td>V</td>
+				<td>W</td>
+				<td class = 'last'>X</td>
+			</tr>
+			<tr class = 'row last'>
+				<td>Y</td>
+				<td>Z</td>
+				
+			</tr>
+
+
+		</tbody>
+	</table>
+</div>

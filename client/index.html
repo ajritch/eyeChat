@@ -15,10 +15,13 @@
 		<!-- JQuery -->
 		<script type = 'text/javascript' src = 'jquery/dist/jquery.min.js'></script>
 
+		<!-- socket.io -->
+		<script type = 'text/javascript' src = '/socket.io/socket.io.js'></script>
+
 		<script type = 'text/javascript'>
 			$(document).ready(function() {
 				//use button to simulate a blink
-				$('button').click(function() {
+				$('#blink-btn').click(function() {
 					if (highlight_row != undefined && rowblink) {
 		                handle_blink();
 		            } else if (highlight_cell != undefined && !rowblink) {
@@ -35,6 +38,7 @@
 		<script type = 'text/javascript' src = 'js/config/config.js'></script>
 		<script type = 'text/javascript' src = 'js/factories/socketFactory.js'></script>
 		<script type = 'text/javascript' src = 'js/controllers/chatController.js'></script>
+		<script type = 'text/javascript' src = 'js/controllers/loginController.js'></script>
 
 
 		<style>
@@ -215,69 +219,9 @@
 		</script>
 
 		<br>
-		<button>Blink</button>
+		<button id = 'blink-btn'>Blink</button>
 
-		<h3 id = 'building_word'></h3>
-		<div ng-controller = 'chatController'>
-			<table id = 'letter_grid'>
-				<tbody>
-					<tr class = 'row'>
-						<td id = 'backspace-btn' class = 'action'>Backspace</td>
-						<td id = 'space-btn' class = 'action'>Space</td>
-						<td id = 'clear-btn' class = 'action'>Clear</td>
-						<td id = 'yes-btn' class = 'action'>YES</td>
-						<td id = 'no-btn' class = 'action last'>NO</td>
-					</tr>
-					<tr class = 'row'>
-						<td>A</td>
-						<td>B</td>
-						<td>C</td>
-						<td>D</td>
-						<td>.</td>
-						<td class = 'last'>?</td>
-					</tr>
-					<tr class = 'row'>
-						<td>E</td>
-						<td>F</td>
-						<td>G</td>
-						<td>H</td>
-						<td>!</td>
-						<td class = 'last'>: )</td>
-					</tr>
-					<tr class = 'row'>
-						<td>I</td>
-						<td>J</td>
-						<td>K</td>
-						<td>L</td>
-						<td>M</td>
-						<td class = 'last'>N</td>
-					</tr>
-					<tr class = 'row'>
-						<td>O</td>
-						<td>P</td>
-						<td>Q</td>
-						<td>R</td>
-						<td>S</td>
-						<td class = 'last'>T</td>
-					</tr>
-					<tr class = 'row'>
-						<td>U</td>
-						<td>V</td>
-						<td>W</td>
-						<td>X</td>
-						<td>Y</td>
-						<td class = 'last'>Z</td>
-					</tr>
-					<tr class = 'row last'>
-						<td id = 'submit-btn' class = 'action'>Submit</td>
-						<td class = 'action last'>Keep Writing</td>
-					</tr>
-
-
-				</tbody>
-			</table>
-
-			<textarea id = 'chats'></textarea>
+		<div ng-view>
 		</div>
 
 

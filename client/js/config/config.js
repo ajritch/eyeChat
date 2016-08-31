@@ -2,12 +2,15 @@ var app = angular.module('app', ['ngRoute']);
 
 app.config(function($routeProvider) {
 	$routeProvider
-		// .when('/', {
-		// 	templateUrl: 'static/partials/dashboard.html'
-		// })
-		// .otherwise({
-		// 	redirectTo: '/'
-		// });
+		.when('/', {
+			templateUrl: 'static/partials/login.html'
+		})
+        .when('/chat', {
+            templateUrl: 'static/partials/chat.html'
+        })
+		.otherwise({
+			redirectTo: '/'
+		});
 });
 
 //range filter to display lots of options
