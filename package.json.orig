@@ -1,7 +1,6 @@
 {
   "name": "1955API",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,6 +13,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "mongoose": "^4.5.9",
+<<<<<<< HEAD
     "socket.io": "^1.4.8"
   },
   "devDependencies": {},
@@ -26,4 +26,8 @@
   },
   "homepage": "https://github.com/ajritch/MEAN_MiniStore#readme",
   "description": ""
+=======
+    "ng-chatbox": "^1.0.1"
+  }
+>>>>>>> b5df44561ba9f20eaa91e6ab9c7b0c13a91ef2bf
 }

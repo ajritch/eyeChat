@@ -238,6 +238,11 @@
 		</script>
 
 		<br>
+<<<<<<< HEAD
+		<button id = 'blink-btn'>Blink</button>
+
+		<div ng-view>
+=======
 		
 		
 		<div ng-controller = 'chatController' class="continaer-fluid">
@@ -312,6 +317,7 @@
 				</div>
 			
 			</div> <!--end row-->
+>>>>>>> b5df44561ba9f20eaa91e6ab9c7b0c13a91ef2bf
 		</div>
 
 
