@@ -39,6 +39,7 @@ button {
 	vertical-align: top;
 	width: 350px;
 	height: 450px;
+	border-radius: 5px;
 }
 
 #chats {
@@ -47,40 +48,53 @@ button {
   	font-size: 14px;
   	padding: 10px;
 	border: 1px solid grey;
+	border-radius: 5px;
 	box-shadow: 0 1px 1px rgba(0,0,0,.05);
 	-moz-box-shadow: 0 1px 1px rgba(0,0,0,.05);
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
 	background-color: mintcream;
 }
 
-/*#letter_grid {
-	height: 150px;
-}*/
 #keyboard {
 	background-color: mintcream;
 	height: 520px;
+	border-radius: 5px;
 }
 
 .row {
 	height: 100%;
 }
+
+/*instructions styling*/
+
 #instructions {
 	background-color: mintcream;
-	height: 270px;
-	padding-right: 35px;
 	padding-top: 25px;
-	margin-left: 25px;
+	border-radius:5px;
+	/*height: 240px;*/
 }
 
 #instructions-chat {
 	background-color: mintcream;
-	height: 240px;
+	/*height: 240px;*/
 	padding-right: 10px;
 	padding-top: 15px;
 	margin-top: 200px;
 	margin-left: 50px;
+	border-radius: 5px;
 	z-index:1;
 	position: absolute;
+}
+
+.list-group {
+	list-style: decimal inside;
+	font-weight: bold; 
+}
+
+.list-group-item {
+	display: list-item;
+	/*font-weight: bold;*/
+	background-color: mintcream;
 }
 
 #head {
@@ -94,7 +108,7 @@ h1, h3 {
 
 .label-info {
 	font-size: 20px;
-	margin-left: 20px;
+	margin-left: 10px;
 }
 
 ol {
@@ -126,3 +140,5 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+
+
