@@ -1,6 +1,7 @@
 
 
-<div ng-controller = 'chatController' class="container-fluid">
+<div ng-controller = 'chatController' class="contianer-fluid">
+	<h3>Welcome, <span ng-bind = 'username'></span>!</h3>
 	<div class="row">
 		<div class="col-md-2" id="instructions-chat">
 			<h4><span class="label label-info">Instructions</span></h4>
@@ -13,8 +14,11 @@
 		<div class="col-md-5" id="keyboard">
 				<h2>Enter your message here:</h2>
 			
-				<h3 id = 'building_word' class='well'></h3>
-			
+			<form id = 'login_form' ng-submit = 'submit()'>
+				<h3 id = 'building_word'></h3>
+				<input type = 'submit' id = 'chat-hidden-submit-btn' hidden>
+			</form>
+
 			<table class="table" id = 'letter_grid'>
 				<tbody>
 					<tr class = 'row'>
@@ -72,9 +76,10 @@
 				</tbody>
 			</table>
 		</div>
-		<div id='chatbox' class="col-md-3">
+		<div id='chats' class="col-md-3">
 			<!-- <h3>Chat</h3> -->
-			<textarea class="textarea well" id = 'chats'>Welcome to eyeChat! You're the first person here.</textarea>
+			<!-- <textarea class="textarea" id = 'chats'>Welcome to eyeChat! You're the first person here.<p>yo</p></textarea> -->
+			<p ng-repeat = 'message in messages' ng-bind = message.chat></p>
 		</div>
 	
 	</div> <!--end row-->

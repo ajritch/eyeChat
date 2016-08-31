@@ -2,7 +2,7 @@ var cell_loop; //interval to loop through all cells in a row
 var row_loop; //interval to loop through all rows in table
 var highlight_row; //row currently highlighted
 var highlight_cell; //cell currently highlighted
-var rowblink = false; //true if current blink expects landing on row
+var rowblink; //true if current blink expects landing on row
 
 var blink_mode = true; //true if blinking turned on
 
@@ -38,18 +38,18 @@ var handle_blink = function() {
                 switch(action) {
                     case 'backspace-btn':
                         var wordStr = $('#building_word').html();
-                        console.log(wordStr,'oiawejfowif');
+                        // console.log(wordStr,'oiawejfowif');
                         var PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/g;
                         var value = wordStr.substring(wordStr.length-10,wordStr.length);
-                        console.log(value,'value')
+                        // console.log(value,'value')
                         var matches = value.match(PATTERN);
                         if(matches){
-                            console.log('in if statement')
+                            // console.log('in if statement')
                             wordStr = wordStr.substring(0,wordStr.length-10);
-                            console.log('after backspace in if statement',wordStr);
+                            // console.log('after backspace in if statement',wordStr);
                             $('#building_word').html(wordStr);
                         } else {
-                            console.log(wordStr);
+                            // console.log(wordStr);
                             wordStr = wordStr.substring(0, wordStr.length - 1);
                             $('#building_word').html(wordStr);
                         }
@@ -68,6 +68,11 @@ var handle_blink = function() {
                     case 'submit-btn':
                         //force click hidden submit button
                         $('#hidden-submit-btn').click();
+                        return;
+                        break;
+                    case 'chat-submit-btn':
+                        //force click to submit
+                        $('#chat-hidden-submit-btn').click();
                         return;
                         break;
                     default:
