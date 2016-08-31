@@ -1,62 +1,74 @@
-<div ng-controller = 'chatController'>
-	<h3 id = 'building_word'></h3>
-	<table id = 'letter_grid'>
-		<tbody>
-			<tr class = 'row'>
-				<td id = 'backspace-btn' class = 'action'>Backspace</td>
-				<td id = 'space-btn' class = 'action'>Space</td>
-				<td id = 'clear-btn' class = 'action'>Clear</td>
-				<td id = 'yes-btn' class = 'action'>YES</td>
-				<td id = 'no-btn' class = 'action last'>NO</td>
-			</tr>
-			<tr class = 'row'>
-				<td>A</td>
-				<td>B</td>
-				<td>C</td>
-				<td>D</td>
-				<td>.</td>
-				<td class = 'last'>?</td>
-			</tr>
-			<tr class = 'row'>
-				<td>E</td>
-				<td>F</td>
-				<td>G</td>
-				<td>H</td>
-				<td>!</td>
-				<td class = 'last'>: )</td>
-			</tr>
-			<tr class = 'row'>
-				<td>I</td>
-				<td>J</td>
-				<td>K</td>
-				<td>L</td>
-				<td>M</td>
-				<td class = 'last'>N</td>
-			</tr>
-			<tr class = 'row'>
-				<td>O</td>
-				<td>P</td>
-				<td>Q</td>
-				<td>R</td>
-				<td>S</td>
-				<td class = 'last'>T</td>
-			</tr>
-			<tr class = 'row'>
-				<td>U</td>
-				<td>V</td>
-				<td>W</td>
-				<td>X</td>
-				<td>Y</td>
-				<td class = 'last'>Z</td>
-			</tr>
-			<tr class = 'row last'>
-				<td id = 'submit-btn' class = 'action'>Submit</td>
-				<td class = 'action last'>Keep Writing</td>
-			</tr>
 
 
-		</tbody>
-	</table>
-
-	<textarea id = 'chats'></textarea>
+<div ng-controller = 'chatController' class="continaer-fluid">
+	<div class="row">
+		<div class="col-md-5" id="keyboard">
+				<p><label>Instructions: </label></p> 
+				<p>Blink your eyes to select a row. Blink again to select a letter. Finally, blink to submit to chat.</p>
+			
+				<h3 id = 'building_word'></h3>
+			
+			<table class="table" id = 'letter_grid'>
+				<tbody>
+					<tr class = 'row'>
+						<td id = 'backspace-btn' class = 'action'>&#9166;</td>
+						<td id = 'space-btn' class = 'action'>Space</td>
+						<td id = 'clear-btn' class = 'action'>Clear</td>
+						<td id = 'yes-btn' class = 'action'>YES</td>
+						<td id = 'no-btn' class = 'action last'>NO</td>
+					</tr>
+					<tr class = 'row'>
+						<td>A</td>
+						<td>B</td>
+						<td>C</td>
+						<td>D</td>
+						<td>.</td>
+						<td class = 'last'>?</td>
+					</tr>
+					<tr class = 'row'>
+						<td>E</td>
+						<td>F</td>
+						<td>G</td>
+						<td>H</td>
+						<td>!</td>
+						<td class = 'last'>&#128522;</td>
+					</tr>
+					<tr class = 'row'>
+						<td>I</td>
+						<td>J</td>
+						<td>K</td>
+						<td>L</td>
+						<td>M</td>
+						<td class = 'last'>N</td>
+					</tr>
+					<tr class = 'row'>
+						<td>O</td>
+						<td>P</td>
+						<td>Q</td>
+						<td>R</td>
+						<td>S</td>
+						<td class = 'last'>T</td>
+					</tr>
+					<tr class = 'row'>
+						<td>U</td>
+						<td>V</td>
+						<td>W</td>
+						<td>X</td>
+						<td>Y</td>
+						<td class = 'last'>Z</td>
+					</tr>
+					<tr class = 'row last'>
+						<td id = 'submit-btn' class = 'action'>Submit</td>
+						<td class = 'action last'>Keep Writing</td>
+					</tr>
+		
+				</tbody>
+			</table>
+		</div>
+		<div id='chatbox' class="col-md-3">
+			<!-- <h3>Chat</h3> -->
+			<textarea class="textarea" id = 'chats'>Welcome to eyeChat! You're the first person here.</textarea>
+		</div>
+	
+	</div> <!--end row-->
 </div>
