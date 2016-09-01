@@ -113,7 +113,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 	$scope.username = userFactory.get_username();
 	console.log($scope.username);
 	//return to login page if no username
-	if ($scope.username == '' || $scope.username = ' ') {
+	if ($scope.username == '' || $scope.username == ' ') {
 		$location.path('/login');
 	} else if ($scope.roomname == '' || $scope.roomname == ' ') {
 
