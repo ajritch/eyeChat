@@ -21,8 +21,6 @@ app.controller('loginController', function($scope, $location, userFactory) {
 		    }
 		});
    	};
-
-   //don't forget to call the load function
    $scope.load();
 
 	$scope.login = function() {
