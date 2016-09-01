@@ -12,7 +12,7 @@ app.factory('userFactory', function($location) {
 
 	factory.logout = function() {
 		username = '';
-		$location.path('/');
+		$location.path('/login');
 	}
 
 	return factory;

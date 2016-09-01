@@ -2,7 +2,7 @@ var app = angular.module('app', ['ngRoute']);
 
 app.config(function($routeProvider) {
 	$routeProvider
-		.when('/', {
+		.when('/login', {
 			templateUrl: 'static/partials/login.html'
 		})
         .when('/chat', {
@@ -12,7 +12,7 @@ app.config(function($routeProvider) {
             templateUrl: 'static/partials/type.html'
         })
 		.otherwise({
-			redirectTo: '/'
+			redirectTo: '/login'
 		});
 });
 

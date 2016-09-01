@@ -5,7 +5,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 	$scope.username = userFactory.get_username();
 	//return to login page if no username
 	if ($scope.username == '') {
-		$location.path('/');
+		$location.path('/login');
 	} else {
 
 		//tell server that a new user was added
