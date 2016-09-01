@@ -5,13 +5,12 @@
 	color: #000;
 	font-weight: bold;
 	text-align: center;
-	font-size: 25px;
+	font-size: 20px;
 	padding: 5px;
 }
 
-#out {
-	margin-top: 25px;
-	margin-left: 25px;
+#letter_grid {
+	height: 300px;
 }
 
 .highlight_row td.highlight_cell {
@@ -22,39 +21,20 @@
 	 background: #249090;
 }
 
-button {
-	position: relative;
-	margin-right:20px;
-	margin-top: 20px;
-}
-
-.login-page {
-	margin-top: 20px;
-}
-
-.btn-custom { 
-  color: #FFFFFF; 
-  background-color: #595959; 
-  border-color: #130269; 
-  display: block;
-} 
-
-.btn-custom:hover {
-	color: #26e0e2;
-}
-
 #building_word {
 	height: 40px;
+	margin-top: 10px;
 	border: 1px solid #000;
 	color: black;
 	padding: 5px;
 	background-color: white;
+	width: 100%
 }
 #chats, table {
 	display: inline-block;
 	vertical-align: top;
 	width: 350px;
-	height: 540px;
+	height: 500px;
 	border-radius: 5px;
 }
 
@@ -74,8 +54,15 @@ button {
 
 #keyboard {
 	background-color: mintcream;
-	height: 540px;
 	border-radius: 5px;
+	padding-bottom: 20px;
+	height: 500px;
+	margin-right: 10px;
+}
+
+.table {
+	height: 350px;
+	margin-bottom: 0px;
 }
 
 .row {
@@ -92,7 +79,6 @@ button {
 
 #instructions-chat {
 	background-color: mintcream;
-	/*height: 240px;*/
 	padding-right: 10px;
 	padding-top: 15px;
 	margin-top: 200px;
@@ -100,6 +86,7 @@ button {
 	border-radius: 5px;
 	z-index:1;
 	position: absolute;
+	height: 300px;
 }
 
 .list-group {
@@ -109,17 +96,7 @@ button {
 
 .list-group-item {
 	display: list-item;
-	/*font-weight: bold;*/
 	background-color: mintcream;
-}
-
-#head {
-	position: absolute;
-}
-
-
-h1, h3 {
-	color: white;
 }
 
 .label-info {
@@ -133,6 +110,17 @@ ol {
 
 label {
 	padding-top: 20px;
+}
+
+/* hidden video */
+#head {
+	position: absolute;
+}
+
+/*visible video */
+#out {
+	margin-top: 25px;
+	margin-left: 35px;
 }
 
 body {
@@ -163,6 +151,35 @@ body {
 .bold_name {
 	font-weight: bold;
 }
-.modal {
-    overflow-y: scroll;
+h1, h3 {
+	color: white;
+}
+
+.enter_message {
+	color: black;
+}
+
+.btn-group {
+	margin-bottom: 5px;
+	padding: 5px;
+}
+
+#blink-btn-login {
+	position: relative;
+	margin-right:20px;
+	margin-top: 20px;
+}
+
+.login-page {
+	margin-top: 20px;
+}
+
+.btn-custom { 
+  color: #FFFFFF; 
+  background-color: #595959; 
+  border-color: #130269; 
+} 
+
+.btn-custom:hover {
+	color: #26e0e2;
 }

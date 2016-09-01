@@ -1,5 +1,6 @@
 app.controller('chatController', function($scope, $location, socketFactory, userFactory) {
 
+	// angular.element(document).find('#chats').scrollTop
 
 	//get name of new user from socketFactory
 	$scope.username = userFactory.get_username();
@@ -22,7 +23,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		$scope.message = '';
 		$scope.messages = [];
 
-		//load button click
+		//load button click and chat autoscroll to bottom
 		$scope.load = function() {
 			$('#blink-btn-chat').click(function() {
 				// console.log('clicked chat blink btn')
@@ -35,6 +36,13 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		};
 		$scope.load();
 
+		$scope.loadScroll = function() {
+			$('#chats').stop().animate({
+			  scrollTop: $('#chats')[0].scrollHeight
+			}, 500);
+		}
+		$scope.loadScroll();
+
 
 		//submit new chat
 		$scope.submit = function() {
@@ -45,6 +53,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 			// console.log('SUBMITTING');
 			socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message});
 			
+			$scope.loadScroll();
 			$scope.message = '';
 			//clear out previous building_word
 			$('#building_word').html('');
@@ -65,8 +74,9 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 			// console.log($scope.message);
 			//send off new message
 			socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message});
-			
+			$scope.loadScroll();
 			$scope.message = '';
+			
 		}
 
 		//ask for all previously existing messages

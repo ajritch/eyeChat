@@ -5,14 +5,14 @@
 	<div class="row">
 
 		<div class="col-md-5" id="keyboard">
-				<h2>Enter your message here:</h2>
+				<h3 class="enter_message">Enter your message here:</h3>
 			
 			<form id = 'login_form' ng-submit = 'type_submit()'>
 				<input ng-model = 'message' type = 'text' id = 'building_word' class="well">
 				<input type = 'submit' id = 'chat-hidden-submit-btn' hidden>
 			</form>
 
-			<a href = '#/chat' class = 'keyboard-btn btn btn-custom'>Use Blink Detection</a>
+			<a href = '#/chat' class = 'keyboard-btn btn btn-info'>Use Blink Detection</a>
 			<button ng-click = 'logout()' class = 'keyboard-btn btn btn-custom'>Logout</button>
 
 			

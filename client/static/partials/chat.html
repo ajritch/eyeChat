@@ -1,8 +1,8 @@
 
 
 <div ng-controller = 'chatController' class="container-fluid">
-	<h3>Welcome, <span ng-bind = 'username'></span>!</h3>
 	<div class="row">
+		<h3>Welcome, <span ng-bind = 'username'></span>!</h3>
 		<div class="col-md-2" id="instructions-chat">
 			<h4><span class="label label-info">Instructions</span></h4>
 				<ol class="list-group">
@@ -12,9 +12,8 @@
 				</ol>
 		</div>
 		<div class="col-md-5" id="keyboard">
-			<button id="blink-btn-chat" class= "btn btn-info pull-right">Blink</button>
-			<a href = '#/type' class="keyboard-btn btn btn-custom pull-right">Use Keyboard</a>
-			<h2>Enter your message here:</h2>
+			
+			<h3 class="enter_message">Enter your message here:</h3>
 			
 			<form id = 'login_form' ng-submit = 'submit()'>
 				<h3 id = 'building_word' class="well"></h3>
@@ -22,7 +21,7 @@
 			</form>
 
 
-			<table class="table" id = 'letter_grid'>
+			<table class="table chat-keyboard" id = 'letter_grid'>
 				<tbody>
 					<tr class = 'row'>
 						<td id = 'backspace-btn' class = 'action'>&#9166;</td>
@@ -78,15 +77,21 @@
 					</tr>
 		
 				</tbody>
-			</table>
 
-			<!-- hideen form for logout -->
+			</table>
+			<div class="btn-group pull-right" role="group">
+				<button id="blink-btn-chat" class= "btn btn-info">Blink</button>
+				<a href = '#/type' class="keyboard-btn btn btn-custom" role="button">Use Keyboard</a>
+			</div> <!--end .btn-group-vertical-->
+			
+
+			<!-- hidden form for logout -->
 			<form ng-submit = 'logout()'>
 				<input type = 'submit' id = 'logout-hidden-submit-btn' hidden>
 			</form>
 			
 		</div>
-		<div id='chats' class="col-md-3">
+		<div id='chats' class="col-md-2">
 			<p ng-repeat = 'message in messages track by $index'>
 				<span class = 'italics_name' ng-if = 'message.alert' ng-bind = 'message.alert'></span>
 				<span ng-if = 'message.name'>
