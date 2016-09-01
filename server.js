@@ -32,26 +32,58 @@ io.sockets.on('connection', function(socket) {
 	//new user has logged in
 	socket.on('add_new_user', function(data) {
 		// console.log(data.name);
-		users.push({'name': data.name, 'id': socket.id});
-		socket.emit('hello_new_user', {'name': data.name, 'messages': messages});
-		var alert = '';
-		alert += data.name + ' has entered the chatroom.';
-		messages.push({'alert': alert});
-		io.emit('all_messages', {'messages': messages});		
+		//make sure that user isn't there
+		console.log(data.name);
+		console.log(socket.id);
+		var index = -1;
+		for (var i = 0; i < users.length; i++) {
+			if (users[i].id === socket.id) {
+				index = i;
+				break;
+			}
+		}
+		//only send alert if this is actually a new user
+		if (index === -1) {
+			users.push({'name': data.name, 'id': socket.id});
+			// socket.emit('hello_new_user', {'name': data.name, 'messages': messages});
+			var alert = '';
+			alert += data.name + ' has entered the chatroom.';
+			messages.push({'alert': alert});
+			io.emit('all_messages', {'messages': messages});		
+		}
 	});
 
 	//new user wants all previous messages
 	socket.on('give_me_messages', function(data) {
-		console.log('sending all', messages);
+		// console.log('sending all', messages);
 		socket.emit('all_messages', {'messages': messages});
-	})
+	});
 
 	//a new chat has been submitted
 	socket.on('add_new_chat', function(data) {
-		console.log('NEW MESSAGE', data);
+		// console.log('NEW MESSAGE', data);
 		messages.push({'name': data.name, 'chat': data.chat});
-		console.log('ALL', messages);
+		// console.log('ALL', messages);
 		// io.emit('new_message', {'name': data.name, 'chat': data.chat});
 		io.emit('all_messages', {'messages': messages});
-	})
+	});
+
+	//a user has left the chat room!
+	socket.on('disconnect', function() {
+		var index = -1;
+		for (var i = 0; i < users.length; i++) {
+			if (users[i].id === socket.id) {
+				index = i;
+				break;
+			}
+		}
+		//make alert if actual user is disconnecting
+		if (index > -1) {
+			var alert = '';
+			alert += users[index].name + ' has left the chatroom.';
+			messages.push({'alert': alert});
+			socket.broadcast.emit('all_messages', {'messages': messages});
+		}
+	});
+
 })

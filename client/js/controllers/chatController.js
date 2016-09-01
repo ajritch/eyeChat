@@ -7,7 +7,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 	if ($scope.username == '') {
 		$location.path('/');
 	} else {
-		
+
 		//tell server that a new user was added
 		socketFactory.emit('add_new_user', {'name': $scope.username});
 
@@ -30,7 +30,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 			// console.log($scope.message);
 			
 			//send message to server
-			console.log('SUBMITTING');
+			// console.log('SUBMITTING');
 			socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message});
 			
 			$scope.message = '';
@@ -48,14 +48,24 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		    row_loop = setInterval(loopRows, INTERVAL);
 		}
 
+		//submit new chat via typing
+		$scope.type_submit = function() {
+			// console.log($scope.message);
+			//send off new message
+			socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message});
+			
+			$scope.message = '';
+		}
+
 		//ask for all previously existing messages
 		//this seems to be getting called WITH EACH SUBMIT
 		socketFactory.emit('give_me_messages', {});
 
+
 		//get all the messages
 		socketFactory.on('all_messages', function(data) {
 			//this is firing twice
-			console.log('MESSAGES', data);
+			// console.log('MESSAGES', data);
 			$scope.messages = data.messages;
 		});
 

@@ -8,6 +8,9 @@ app.config(function($routeProvider) {
         .when('/chat', {
             templateUrl: 'static/partials/chat.html'
         })
+        .when('/type', {
+            templateUrl: 'static/partials/type.html'
+        })
 		.otherwise({
 			redirectTo: '/'
 		});
