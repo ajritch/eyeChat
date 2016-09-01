@@ -19,9 +19,22 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		clearInterval(cell_loop);
 	    row_loop = setInterval(loopRows, INTERVAL);
 
-
 		$scope.message = '';
 		$scope.messages = [];
+
+		$scope.blink_btn_click = function () {
+			$scope.load = function() {
+				$('#blink-btn-chat').on('click','#blink-btn-chat', function() {
+					console.log('clicked chat blink btn')
+					if (highlight_row != undefined && rowblink) {
+			            handle_blink();
+			        } else if (highlight_cell != undefined && !rowblink) {
+			            handle_blink();
+			        }
+				});
+			};
+			$scope.load();
+		}
 
 
 		//submit new chat
