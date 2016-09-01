@@ -22,6 +22,10 @@
 	 background: #249090;
 }
 
+.highlight_room {
+	background: #249090;
+}
+
 button {
 	position: relative;
 	margin-right:20px;
@@ -43,7 +47,7 @@ button {
 	color: #26e0e2;
 }
 
-#building_word {
+#building_word, #room_building_word {
 	height: 40px;
 	border: 1px solid #000;
 	color: black;
@@ -84,7 +88,7 @@ button {
 
 /*instructions styling*/
 
-#instructions {
+#instructions, #room_instructions {
 	background-color: mintcream;
 	padding-top: 25px;
 	border-radius:5px;
@@ -165,4 +169,15 @@ body {
 }
 .modal {
     overflow-y: scroll;
+}
+
+#room_list, .no_bullets {
+	list-style: none;
+}
+.room_list_item {
+	border: 1px solid grey;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 10px;
+	font-size: 18px;
 }

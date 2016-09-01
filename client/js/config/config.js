@@ -11,6 +11,12 @@ app.config(function($routeProvider) {
         .when('/type', {
             templateUrl: 'static/partials/type.html'
         })
+        .when('/home', {
+            templateUrl: 'static/partials/rooms.html'
+        })
+        .when('/new_room', {
+            templateUrl: 'static/partials/new_room.html'
+        })
 		.otherwise({
 			redirectTo: '/login'
 		});

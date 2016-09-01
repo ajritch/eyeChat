@@ -1,10 +1,13 @@
 var cell_loop; //interval to loop through all cells in a row
 var row_loop; //interval to loop through all rows in table
+var room_loop; //interval to loop through all rooms in list
 var highlight_row; //row currently highlighted
 var highlight_cell; //cell currently highlighted
 var rowblink; //true if current blink expects landing on row
 
 var blink_mode = true; //true if blinking turned on
+
+var highlight_room; //room name currently highlighted
 
 
 //clear whatever loop interval was happily going on
@@ -79,6 +82,10 @@ var handle_blink = function() {
                         $('#logout-hidden-submit-btn').click();
                         return;
                         break;
+                    case 'new-room-submit-btn':
+                        $('#new-room-hidden-submit-btn').click();
+                        return;
+                        break;
                     default:
                         break;
                 }
@@ -94,6 +101,44 @@ var handle_blink = function() {
             //begin looping through rows again
             row_loop = setInterval(loopRows, INTERVAL);
         }
+    }
+}
+
+var choose_room = function() {
+    //start looping if not already highlighting
+    if (highlight_room == undefined) {
+        room_loop = setInterval(loopRooms, INTERVAL); 
+    } else {
+        //choose highlighted room
+        clearInterval(room_loop);
+        //check if highlighted room is "make new room"
+        if ($(highlight_room).attr('class').includes('last')) {
+            //action to let user make new room
+            $('#new-room-hidden-submit-btn').click();
+        } else {
+            //enter the chosen room           
+            var room = $(highlight_room).html();
+            $('#room_name_input').val(room);
+            $('#enter-room-hidden-submit-btn').click();
+            console.log('chose a room!!', room);
+        }
+    }
+}
+
+//loop through all the rooms in a list
+function loopRooms() {
+    var rooms = $('#room_list').children();
+    if (highlight_room == undefined) {
+        highlight_room = rooms[0];
+        $(highlight_room).toggleClass('highlight_room');
+    } else if ($(highlight_room).attr('class') != undefined && $(highlight_room).attr('class').includes('last')) {
+        $(highlight_room).toggleClass('highlight_room');
+        highlight_room = rooms[0];
+        $(highlight_room).toggleClass('highlight_room');
+    } else {
+        $(highlight_room).toggleClass('highlight_room');
+        highlight_room = $(highlight_room).next()[0];
+        $(highlight_room).toggleClass('highlight_room');
     }
 }
 

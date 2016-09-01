@@ -32,7 +32,7 @@ app.controller('loginController', function($scope, $location, userFactory) {
 		//send username to server via sockets in chatController
 		
 		//redirect to chat partial
-		$location.path('/chat');
+		$location.path('/home');
 		$scope.username = '';
 	}
 

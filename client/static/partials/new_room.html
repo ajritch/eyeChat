@@ -1,0 +1,75 @@
+<div class="container fluid" ng-controller = 'chatController'>
+	
+	<div class ="row">
+
+		<div class="col-md-7" id="keyboard">
+			<button id="blink-btn-new-room" class= "btn btn-info pull-right">Blink</button>
+			
+			<h2>Welcome, <span ng-bind = 'username'></span>!<h2>
+			<h4>Please enter a new chat room name:</h4>
+			<form id = 'new_room_form' ng-submit = 'make_room()'>
+				<h3 id = 'building_word' class="well"></h3>
+				<input type = 'submit' id = 'new-room-hidden-submit-btn' hidden>
+			</form>
+
+				
+			<table class="table" id = 'letter_grid'>
+				<tbody>
+					<tr class = 'row'>
+						<td id = 'backspace-btn' class = 'action'>&#9166;</td>
+						<td id = 'new-room-submit-btn' class = 'action'>Submit</td>
+						<td id = 'space-btn' class = 'action'>Space</td>
+						<td id = 'clear-btn' class = 'action '>Clear</td>
+						<td class = 'action last'>Keep Writing</td>
+					</tr>
+					<tr class = 'row'>
+						<td class= "letter">A</td>
+						<td class= "letter">B</td>
+						<td class= "letter">C</td>
+						<td class= "letter">D</td>
+						<td class= "letter">E</td>
+						<td class = 'last'>F</td>
+					</tr>
+					<tr class = 'row'>
+						<td class= "letter">G</td>
+						<td class= "letter">H</td>
+						<td class= "letter">I</td>
+						<td class= "letter">J</td>
+						<td class= "letter">K</td>
+						<td class = 'last'>L</td>
+					</tr>
+					<tr class = 'row'>
+						<td class= "letter">M</td>
+						<td class= "letter">N</td>
+						<td class= "letter">O</td>
+						<td class= "letter">P</td>
+						<td class= "letter">Q</td>
+						<td class = 'last'>R</td>
+					</tr>
+					<tr class = 'row'>
+						<td class= "letter">S</td>
+						<td class= "letter">T</td>
+						<td class= "letter">U</td>
+						<td class= "letter">V</td>
+						<td class= "letter">W</td>
+						<td class = 'last'>X</td>
+					</tr>
+					<tr class = 'row last'>
+						<td class= "letter">Y</td>
+						<td class= "letter">Z</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	
+		
+		<div class="col-md-2 pull-right" id="instructions">
+			<span class="label label-info">Instructions</span>
+				<ol class="list-group">
+					<li class="list-group-item">Blink your eyes to select a row.</li> 
+					<li class="list-group-item">Blink again to select a letter.</li>
+					<li class="list-group-item">Finally, blink on the 'Submit' button to submit your new room name.</li>
+				</ol>
+		</div>
+	</div> <!-- end row -->
+</div>

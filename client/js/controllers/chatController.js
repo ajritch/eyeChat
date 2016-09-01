@@ -1,15 +1,172 @@
-app.controller('chatController', function($scope, $location, socketFactory, userFactory) {
+app.controller('chatController', function($scope, $location, socketFactory, userFactory, roomFactory) {
 
+	//load all buttons
+	$scope.load = function() {
+		$('#blink-btn-rooms').click(function() {
+			if (highlight_room != undefined) {
+				choose_room();
+			}
+		});
+		$('#blink-btn-new-room').click(function() {
+			if (highlight_row != undefined && rowblink) {
+	            handle_blink();
+	        } else if (highlight_cell != undefined && !rowblink) {
+	            handle_blink();
+	        }
+		});
+		$('#blink-btn-chat').click(function() {
+			// console.log('clicked chat blink btn')
+			if (highlight_row != undefined && rowblink) {
+	            handle_blink();
+	        } else if (highlight_cell != undefined && !rowblink) {
+	            handle_blink();
+	        }
+		});
+	};
+	$scope.load();
+
+	//load the scroller
+	$scope.loadScroll = function() {
+		$('#chats').stop().animate({
+			scrollTop: $('#chats')[0].scrollHeight
+		}, 500);
+	}
+
+	//reestablish any loops
+	highlight_room = undefined;
+	clearInterval(room_loop);
+
+
+	//DEFINE FUNCTIONS
+
+	//go to make new room page
+	$scope.new_room = function() {
+		//redirect to page where user can add a new room
+		$location.path('/new_room');
+	}
+
+	//user has submitted room name (make new room)
+	$scope.make_room = function() {
+		$scope.room = $('#building_word').html();
+		console.log($scope.room);
+		//enter the new room (factory handles page change)
+		roomFactory.enter($scope.room);
+
+	}
+
+	//submit new chat
+	$scope.submit = function() {
+		$scope.message = $('#building_word').html();
+		// console.log($scope.message);
+		
+		//send message to server
+		// console.log('SUBMITTING');
+		socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message});
+		$scope.loadScroll();
+		
+		$scope.message = '';
+		//clear out previous building_word
+		$('#building_word').html('');
+
+		//reestablish the looping! and un-highlight!
+		$(highlight_row).toggleClass('highlight_row');
+        $(highlight_cell).toggleClass('highlight_cell');
+		highlight_row = undefined;
+	    highlight_cell = undefined;
+	    rowblink = true;
+	    clearInterval(row_loop);
+		clearInterval(cell_loop);
+	    row_loop = setInterval(loopRows, INTERVAL);
+	}
+
+	//submit new chat via typing
+	$scope.type_submit = function() {
+		// console.log($scope.message);
+		//send off new message
+		socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message});
+		$scope.loadScroll();
+
+		$scope.message = '';
+	}
+
+	//logout!
+	$scope.logout = function() {
+		//tell socket there's been a "disconnet"
+		socketFactory.emit('logout', {'name': $scope.username});
+		userFactory.logout();
+	}
+
+
+
+
+
+	//CONTROLLER LOGIC
+
+	//get name of current room from roomFactory
+	$scope.roomname = roomFactory.get_room();
+
+	//get names of all rooms from roomFactory
+	$scope.rooms = roomFactory.all_rooms();
+	console.log('ROOMS', $scope.rooms);
 
 	//get name of new user from socketFactory
 	$scope.username = userFactory.get_username();
+	console.log($scope.username);
 	//return to login page if no username
-	if ($scope.username == '') {
+	if ($scope.username == '' || $scope.username = ' ') {
 		$location.path('/login');
+	} else if ($scope.roomname == '' || $scope.roomname == ' ') {
+
+		//not on roompage? go to roompage
+		if ($location.path() != '/home' && $location.path() != '/new_room') {
+			$location.path('/home');
+		}
+
+		if ($location.path() == '/home') {
+			//on roompage? select a room!
+			//loop through rooms
+			highlight_room = undefined;
+			clearInterval(room_loop);
+			room_loop = setInterval(loopRooms, INTERVAL);
+		
+		}
+
+
+		//on make new room page? refresh looping
+		if ($location.path() == '/new_room') {
+			//re-establish the looping!
+			highlight_row = undefined;
+		    highlight_cell = undefined;
+		    rowblink = true;
+		    clearInterval(row_loop);
+			clearInterval(cell_loop);
+		    row_loop = setInterval(loopRows, INTERVAL);
+		}
+
+		
+
+	} else if ($location.path() == '/new_room') {
+			//on make new room page? refresh looping
+			//re-establish the looping!
+			highlight_row = undefined;
+		    highlight_cell = undefined;
+		    rowblink = true;
+		    clearInterval(row_loop);
+			clearInterval(cell_loop);
+		    row_loop = setInterval(loopRows, INTERVAL);
+	} else if ($location.path() == '/home') {
+		//on roompage? select a room!
+		//loop through rooms
+		highlight_room = undefined;
+		clearInterval(room_loop);
+		room_loop = setInterval(loopRooms, INTERVAL);
+	
 	} else {
 
+		$scope.loadScroll();
 		//tell server that a new user was added
 		socketFactory.emit('add_new_user', {'name': $scope.username});
+
 
 		//re-establish the looping!
 		highlight_row = undefined;
@@ -22,53 +179,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		$scope.message = '';
 		$scope.messages = [];
 
-		//load button click
-		$scope.load = function() {
-			$('#blink-btn-chat').click(function() {
-				// console.log('clicked chat blink btn')
-				if (highlight_row != undefined && rowblink) {
-		            handle_blink();
-		        } else if (highlight_cell != undefined && !rowblink) {
-		            handle_blink();
-		        }
-			});
-		};
-		$scope.load();
-
-
-		//submit new chat
-		$scope.submit = function() {
-			$scope.message = $('#building_word').html();
-			// console.log($scope.message);
-			
-			//send message to server
-			// console.log('SUBMITTING');
-			socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message});
-			
-			$scope.message = '';
-			//clear out previous building_word
-			$('#building_word').html('');
-
-			//reestablish the looping! and un-highlight!
-			$(highlight_row).toggleClass('highlight_row');
-	        $(highlight_cell).toggleClass('highlight_cell');
-			highlight_row = undefined;
-		    highlight_cell = undefined;
-		    rowblink = true;
-		    clearInterval(row_loop);
-			clearInterval(cell_loop);
-		    row_loop = setInterval(loopRows, INTERVAL);
-		}
-
-		//submit new chat via typing
-		$scope.type_submit = function() {
-			// console.log($scope.message);
-			//send off new message
-			socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message});
-			
-			$scope.message = '';
-		}
-
+		
 		//ask for all previously existing messages
 		//this seems to be getting called WITH EACH SUBMIT
 		socketFactory.emit('give_me_messages', {});
@@ -87,12 +198,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		// 	$scope.messages.push(data);
 		// });
 
-		//logout!
-		$scope.logout = function() {
-			//tell socket there's been a "disconnet"
-			socketFactory.emit('logout', {'name': $scope.username});
-			userFactory.logout();
-		}
+		
 	}
 
 

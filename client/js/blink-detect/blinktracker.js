@@ -311,6 +311,10 @@ var blink_processor = {
             } else if (highlight_cell != undefined && !rowblink) {
                 handle_blink();
             }
+            //blinking on a room!
+            if (highlight_room != undefined) {
+                choose_room();
+            }
         }
 
         
