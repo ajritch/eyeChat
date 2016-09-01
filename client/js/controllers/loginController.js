@@ -10,6 +10,21 @@ app.controller('loginController', function($scope, $location, userFactory) {
 
 	$scope.username = '';
 
+
+	$scope.load = function() {
+       $('#blink-btn-login').click(function() {
+			console.log('clicked login blink btn')
+			if (highlight_row != undefined && rowblink) {
+		        handle_blink();
+		    } else if (highlight_cell != undefined && !rowblink) {
+		        handle_blink();
+		    }
+		});
+   	};
+
+   //don't forget to call the load function
+   $scope.load();
+
 	$scope.login = function() {
 		console.log('submitted login');
 		$scope.username = $('#building_word').html();

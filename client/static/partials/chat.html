@@ -12,12 +12,15 @@
 				</ol>
 		</div>
 		<div class="col-md-5" id="keyboard">
-				<h2>Enter your message here:</h2>
+			<button id="blink-btn-chat" class= "btn btn-info pull-right" ng-click="blink_btn_click()">Blink</button>
+			<button class="keyboard-btn btn btn-custom pull-right">Use Keyboard</button>
+			<h2>Enter your message here:</h2>
 			
 			<form id = 'login_form' ng-submit = 'submit()'>
 				<h3 id = 'building_word' class="well"></h3>
 				<input type = 'submit' id = 'chat-hidden-submit-btn' hidden>
 			</form>
+
 
 			<table class="table" id = 'letter_grid'>
 				<tbody>
@@ -75,10 +78,9 @@
 		
 				</tbody>
 			</table>
+			
 		</div>
 		<div id='chats' class="col-md-3">
-			<!-- <h3>Chat</h3> -->
-			<!-- <textarea class="textarea" id = 'chats'>Welcome to eyeChat! You're the first person here.<p>yo</p></textarea> -->
 			<p ng-repeat = 'message in messages track by $index'>
 				<span class = 'italics_name' ng-if = 'message.alert' ng-bind = 'message.alert'></span>
 				<span ng-if = 'message.name'>

@@ -3,12 +3,16 @@
 	<div class ="row">
 
 		<div class="col-md-7" id="keyboard">
+			<button id="blink-btn-login" class= "btn btn-info pull-right">Blink</button>
+			
 			<h2>Welcome!<h2>
 			<h4>Please enter your name to start chatting:</h4>
 			<form id = 'login_form' ng-submit = 'login()'>
 				<h3 id = 'building_word' class="well"></h3>
 				<input type = 'submit' id = 'hidden-submit-btn' hidden>
 			</form>
+
+				
 			<table class="table" id = 'letter_grid'>
 				<tbody>
 					<tr class = 'row'>
@@ -53,13 +57,12 @@
 					<tr class = 'row last'>
 						<td class= "letter">Y</td>
 						<td class= "letter">Z</td>
-						
 					</tr>
-
-
 				</tbody>
 			</table>
 		</div>
+	
+		
 		<div class="col-md-2 pull-right" id="instructions">
 			<span class="label label-info">Instructions</span>
 				<ol class="list-group">
