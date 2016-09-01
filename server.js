@@ -33,11 +33,11 @@ io.sockets.on('connection', function(socket) {
 	socket.on('add_new_user', function(data) {
 		// console.log(data.name);
 		//make sure that user isn't there
-		console.log(data.name);
-		console.log(socket.id);
+		// console.log(data.name);
+		// console.log(socket.id);
 		var index = -1;
 		for (var i = 0; i < users.length; i++) {
-			if (users[i].id === socket.id) {
+			if (users[i].id === socket.id && users[i].name === data.name) {
 				index = i;
 				break;
 			}
@@ -83,7 +83,28 @@ io.sockets.on('connection', function(socket) {
 			alert += users[index].name + ' has left the chatroom.';
 			messages.push({'alert': alert});
 			socket.broadcast.emit('all_messages', {'messages': messages});
+			//splice out that user
+			users.splice(index, 1);
 		}
 	});
+
+	//a user has logged out
+	socket.on('logout', function(data) {
+		var index = -1;
+		for (var i = 0; i < users.length; i++) {
+			if (users[i].id === socket.id && users[i].name === data.name) {
+				index = i;
+				break;
+			}
+		}
+		if (index > -1) {
+			var alert = '';
+			alert += users[index].name + ' has left the chatroom.';
+			messages.push({'alert': alert});
+			socket.broadcast.emit('all_messages', {'messages': messages});
+			//splice out that user
+			users.splice(index, 1);
+		}
+	})
 
 })

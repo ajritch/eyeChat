@@ -1,4 +1,4 @@
-app.factory('userFactory', function() {
+app.factory('userFactory', function($location) {
 	factory = {};
 	var username = '';
 
@@ -8,6 +8,11 @@ app.factory('userFactory', function() {
 
 	factory.get_username = function() {
 		return username;
+	}
+
+	factory.logout = function() {
+		username = '';
+		$location.path('/');
 	}
 
 	return factory;

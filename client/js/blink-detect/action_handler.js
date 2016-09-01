@@ -75,6 +75,10 @@ var handle_blink = function() {
                         $('#chat-hidden-submit-btn').click();
                         return;
                         break;
+                    case 'chat-logout':
+                        $('#logout-hidden-submit-btn').click();
+                        return;
+                        break;
                     default:
                         break;
                 }

@@ -13,7 +13,7 @@
 		</div>
 		<div class="col-md-5" id="keyboard">
 			<button id="blink-btn-chat" class= "btn btn-info pull-right">Blink</button>
-			<button class="keyboard-btn btn btn-custom pull-right">Use Keyboard</button>
+			<a href = '#/type' class="keyboard-btn btn btn-custom pull-right">Use Keyboard</a>
 			<h2>Enter your message here:</h2>
 			
 			<form id = 'login_form' ng-submit = 'submit()'>
@@ -73,11 +73,17 @@
 					</tr>
 					<tr class = 'row last'>
 						<td id = 'chat-submit-btn' class = 'action'>Submit</td>
-						<td class = 'action last'>Keep Writing</td>
+						<td class = 'action'>Keep Writing</td>
+						<td id = 'chat-logout' class = 'action last'>Logout</td>
 					</tr>
 		
 				</tbody>
 			</table>
+
+			<!-- hideen form for logout -->
+			<form ng-submit = 'logout()'>
+				<input type = 'submit' id = 'logout-hidden-submit-btn' hidden>
+			</form>
 			
 		</div>
 		<div id='chats' class="col-md-3">

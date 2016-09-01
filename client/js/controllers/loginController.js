@@ -13,7 +13,7 @@ app.controller('loginController', function($scope, $location, userFactory) {
 
 	$scope.load = function() {
        $('#blink-btn-login').click(function() {
-			console.log('clicked login blink btn')
+			// console.log('clicked login blink btn')
 			if (highlight_row != undefined && rowblink) {
 		        handle_blink();
 		    } else if (highlight_cell != undefined && !rowblink) {
@@ -24,7 +24,6 @@ app.controller('loginController', function($scope, $location, userFactory) {
    $scope.load();
 
 	$scope.login = function() {
-		console.log('submitted login');
 		$scope.username = $('#building_word').html();
 
 		//update username in factory

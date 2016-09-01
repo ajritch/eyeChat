@@ -25,7 +25,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		//load button click
 		$scope.load = function() {
 			$('#blink-btn-chat').click(function() {
-				console.log('clicked chat blink btn')
+				// console.log('clicked chat blink btn')
 				if (highlight_row != undefined && rowblink) {
 		            handle_blink();
 		        } else if (highlight_cell != undefined && !rowblink) {
@@ -86,6 +86,13 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		// 	console.log('new message', data);
 		// 	$scope.messages.push(data);
 		// });
+
+		//logout!
+		$scope.logout = function() {
+			//tell socket there's been a "disconnet"
+			socketFactory.emit('logout', {'name': $scope.username});
+			userFactory.logout();
+		}
 	}
 
 
