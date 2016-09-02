@@ -58,6 +58,11 @@ button {
   display: block;
 } 
 
+#keyboard-button, #blink-btn-chat {
+	margin-top: 5px;
+	vertical-align: bottom;
+}
+
 .btn-custom:hover {
 	color: #26e0e2;
 }
@@ -228,7 +233,6 @@ h1, h3 {
 
 .btn-group {
 	margin-bottom: 5px;
-	padding: 5px;
 }
 
 #blink-btn-login {

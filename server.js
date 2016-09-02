@@ -104,19 +104,19 @@ io.sockets.on('connection', function(socket) {
 		}
 		//make alert if actual user is disconnecting
 		//data.room does not exist!
-		if (index > -1) {
-			var alert = '';
-			alert += users[index].name + ' has left the chatroom.';
-			messagesCtrl.add({'alert': alert}, entering_roomname, function() {
-				//get all messages from the room
-				roomsCtrl.get_messages(entering_roomname, function(output) {
-					io.to(entering_roomname).emit('all_messages', {'messages': output});
-				});
-				//splice out that user
-				users.splice(index, 1);
+		// if (index > -1) {
+		// 	var alert = '';
+		// 	alert += users[index].name + ' has left the chatroom.';
+		// 	messagesCtrl.add({'alert': alert}, entering_roomname, function() {
+		// 		//get all messages from the room
+		// 		roomsCtrl.get_messages(entering_roomname, function(output) {
+		// 			io.to(entering_roomname).emit('all_messages', {'messages': output});
+		// 		});
+		// 		//splice out that user
+		// 		users.splice(index, 1);
 				
-			});
-		}
+		// 	});
+		// }
 	});
 
 	//a user has logged out
