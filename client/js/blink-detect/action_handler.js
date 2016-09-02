@@ -17,7 +17,7 @@ clearInterval(row_loop);
 clearInterval(cell_loop);
 
 //interval timing
-const INTERVAL = 500;
+const INTERVAL = 1200;
 
 
 
