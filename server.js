@@ -1,8 +1,17 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var https = require('https');
+var fs = require('fs');
 
 var app = express();
+
+var options = {
+    key: fs.readFileSync('ssl/server.key'),
+    cert: fs.readFileSync('ssl/server.crt'),
+    requestCert: false,
+    rejectUnauthorized: false
+};
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, './client')));
@@ -15,7 +24,7 @@ require('./server/config/mongoose.js');
 //module config and routing
 require('./server/config/routes.js')(app);
 
-var server = app.listen(7000, function() {
+var server = https.createServer(options, app).listen(7000, function() {
 	console.log('listening on port 7000');
 });
 
