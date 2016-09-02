@@ -25,6 +25,22 @@
 	background: #249090;
 }
 
+#select-room  {
+	padding: 25px;
+	background-color: mintcream;
+	border-radius: 5px;
+	height: 500px;
+	margin-right: 10px;
+}
+
+#select-room h2, #select-room h4 {
+	margin-left: 40px;
+}
+
+#room_list li:last-child {
+	font-weight: bolder;
+}
+
 button {
 	position: relative;
 	margin-right:20px;
@@ -53,7 +69,7 @@ button {
 	color: black;
 	padding: 5px;
 	background-color: white;
-	width: 100%
+	width: 95%
 }
 #chats, table {
 	display: inline-block;
@@ -80,7 +96,7 @@ button {
 #keyboard {
 	background-color: mintcream;
 	border-radius: 5px;
-	padding-bottom: 20px;
+	padding: 30px;
 	height: 500px;
 	margin-right: 10px;
 }
@@ -122,6 +138,21 @@ button {
 .list-group-item {
 	display: list-item;
 	background-color: mintcream;
+}
+
+.list-group .no-bullets {
+	background-color: mintcream;
+	list-style: none;
+}
+
+.list-group-item .no-bullets {
+	display: none;
+	background-color: mintcream;
+	position: absolute;
+	margin-top: 10px;
+}
+.no-bullets .list-group-item:last-child {
+	margin-top: 10px;
 }
 
 .label-info {
