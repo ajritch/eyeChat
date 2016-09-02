@@ -68,7 +68,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 	//user has submitted room name (make new room)
 	$scope.make_room = function() {
 		$scope.newRoom = $('#building_word').html();
-		entering_room = $scope.newRoom;
+		entering_roomname = $scope.newRoom;
 		// console.log($scope.newRoom);
 		//enter the new room (factory handles page change)
 		roomFactory.addRoom($scope.newRoom);
