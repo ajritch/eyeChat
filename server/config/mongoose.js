@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 
 //connect to db
-mongoose.connect('mongodb://localhost/db_name');
+mongoose.connect('mongodb://localhost/eyeChat_db');
 
 //require all models in directory
 var models_path = __dirname + '/../models';

@@ -1,27 +1,45 @@
-app.factory('roomFactory', function($location) {
+app.factory('roomFactory', function($location, $http) {
 	factory = {};
-	var room = '';
-	var rooms = [];
+	var room;
 
+	//enter a room
 	factory.enter = function(name) {
+		console.log('in factory', name);
 		room = name;
-		if (rooms.indexOf(room) === -1) {
-			rooms.push(room);
-		}
 		//change location to new room
-		$location.path('/home');
+		$location.path('/chat');
 	}
 
-	factory.get_room = function() {
+	//add a new room
+	factory.addRoom = function(name) {
+		// factory.room = name;
+		room = name;
+		// console.log('the room is', room);
+		$http.post('/rooms', {'name': room}).success(function(output) {
+			console.log('room added');
+		})
+		$location.path('/chat');
+	}
+
+	//get roomname
+	factory.get_roomname = function() {
 		return room;
 	}
 
-	factory.all_rooms = function() {
-		return rooms;
+	// factory.get_room = function(name, callback) {
+	// 	$http.get('/rooms/' + name).success(function(output) {
+	// 		callback(output);
+	// 	});
+	// }
+
+	factory.all_rooms = function(callback) {
+		$http.get('/rooms').success(function(output) {
+			callback(output);
+		});
 	}
 
 	factory.leave = function() {
-		room = '';
+		factory.room = '';
 		$location.path('/home');
 	}
 

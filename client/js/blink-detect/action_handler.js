@@ -9,6 +9,8 @@ var blink_mode = true; //true if blinking turned on
 
 var highlight_room; //room name currently highlighted
 
+var entering_roomname; //name of room to be entered. sorry it's global
+
 
 //clear whatever loop interval was happily going on
 clearInterval(row_loop);
@@ -117,8 +119,11 @@ var choose_room = function() {
             $('#new-room-hidden-submit-btn').click();
         } else {
             //enter the chosen room           
-            var room = $(highlight_room).html();
+            var preroom = $(highlight_room).html();
+            var room = preroom.substring(46, preroom.length - 7);
             $('#room_name_input').val(room);
+            entering_roomname = room;
+            // console.log($('#room_name_input').val());
             $('#enter-room-hidden-submit-btn').click();
             console.log('chose a room!!', room);
         }

@@ -23,7 +23,11 @@ var server = app.listen(7000, function() {
 //all the socket things
 var io = require('socket.io').listen(server);
 
-var messages = [];
+//load the necessary server controllers
+var roomsCtrl = require('./server/controllers/rooms.js');
+var messagesCtrl = require('./server/controllers/messages.js');
+
+// var messages = [];
 var users = [];
 
 io.sockets.on('connection', function(socket) {
@@ -31,6 +35,8 @@ io.sockets.on('connection', function(socket) {
 
 	//new user has logged in
 	socket.on('add_new_user', function(data) {
+		//join the room
+		socket.join(data.room);
 		// console.log(data.name);
 		//make sure that user isn't there
 		// console.log(data.name);
@@ -48,24 +54,43 @@ io.sockets.on('connection', function(socket) {
 			// socket.emit('hello_new_user', {'name': data.name, 'messages': messages});
 			var alert = '';
 			alert += data.name + ' has entered the chatroom.';
-			messages.push({'alert': alert});
-			io.emit('all_messages', {'messages': messages});		
+			//add this alert to the room's messages
+			messagesCtrl.add({'alert': alert}, data.room);
+
+			//get all messages from the room
+			roomsCtrl.get_messages(data.room, function(output) {
+				io.to(data.room).emit('all_messages', {'messages': output});
+			});
+			// io.to(data.room).emit('all_messages', {'messages': messages});		
 		}
 	});
 
 	//new user wants all previous messages
 	socket.on('give_me_messages', function(data) {
 		// console.log('sending all', messages);
-		socket.emit('all_messages', {'messages': messages});
+		//get all messages from the room
+		// console.log(data.room);
+		roomsCtrl.get_messages(data.room, function(output) {
+			// console.log('callback', output);
+			io.to(data.room).emit('all_messages', {'messages': output});
+		});
+		// console.log('MESSAGES', messages);
+		// io.to(data.room).emit('all_messages', {'messages': messages});
 	});
 
 	//a new chat has been submitted
 	socket.on('add_new_chat', function(data) {
-		// console.log('NEW MESSAGE', data);
-		messages.push({'name': data.name, 'chat': data.chat});
-		// console.log('ALL', messages);
-		// io.emit('new_message', {'name': data.name, 'chat': data.chat});
-		io.emit('all_messages', {'messages': messages});
+
+		//add this alert to the room's messages
+		messagesCtrl.add({'name': data.name, 'chat': data.chat}, data.room, function() {
+			console.log('doing callback');
+			//get all messages from the room
+			roomsCtrl.get_messages(data.room, function(output) {
+				// console.log('callback', output);
+				io.to(data.room).emit('all_messages', {'messages': output});
+			});
+		});
+
 	});
 
 	//a user has left the chat room!
@@ -78,13 +103,19 @@ io.sockets.on('connection', function(socket) {
 			}
 		}
 		//make alert if actual user is disconnecting
+		//data.room does not exist!
 		if (index > -1) {
 			var alert = '';
 			alert += users[index].name + ' has left the chatroom.';
-			messages.push({'alert': alert});
-			socket.broadcast.emit('all_messages', {'messages': messages});
-			//splice out that user
-			users.splice(index, 1);
+			messagesCtrl.add({'alert': alert}, entering_roomname, function() {
+				//get all messages from the room
+				roomsCtrl.get_messages(entering_roomname, function(output) {
+					io.to(entering_roomname).emit('all_messages', {'messages': output});
+				});
+				//splice out that user
+				users.splice(index, 1);
+				
+			});
 		}
 	});
 
@@ -100,10 +131,15 @@ io.sockets.on('connection', function(socket) {
 		if (index > -1) {
 			var alert = '';
 			alert += users[index].name + ' has left the chatroom.';
-			messages.push({'alert': alert});
-			socket.broadcast.emit('all_messages', {'messages': messages});
-			//splice out that user
-			users.splice(index, 1);
+			messagesCtrl.add({'alert': alert}, data.room, function() {
+				//get all messages from the room
+				roomsCtrl.get_messages(data.room, function(output) {
+					io.to(data.room).emit('all_messages', {'messages': output});
+				});
+				//splice out that user
+				users.splice(index, 1);
+				
+			});
 		}
 	})
 

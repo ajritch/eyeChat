@@ -1,25 +1,5 @@
 app.controller('chatController', function($scope, $location, socketFactory, userFactory, roomFactory) {
 
-
-	//get name of current room from roomFactory
-	$scope.roomname = roomFactory.get_roomname();
-	console.log('we are in room', $scope.roomname);
-
-	$scope.newRoom; //room when adding room name
-
-	//get names of all rooms from roomFactory
-	roomFactory.all_rooms(function(results) {
-		$scope.rooms = results;
-		console.log(results);
-	});
-	// console.log('ROOMS', $scope.rooms);
-
-	//get name of new user from socketFactory
-	$scope.username = userFactory.get_username();
-	console.log($scope.username);
-
-
-
 	//load all buttons
 	$scope.load = function() {
 		$('#blink-btn-rooms').click(function() {
@@ -52,9 +32,13 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		}, 500);
 	}
 
+<<<<<<< HEAD
 	//reestablish any loops
 	highlight_room = undefined;
 	clearInterval(room_loop);
+=======
+	// angular.element(document).find('#chats').scrollTop
+>>>>>>> 783ae8bc027f1b2df9adb1b80994e60c5c991223
 
 
 	//DEFINE FUNCTIONS
@@ -67,18 +51,11 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 
 	//user has submitted room name (make new room)
 	$scope.make_room = function() {
-		$scope.newRoom = $('#building_word').html();
-		entering_room = $scope.newRoom;
-		// console.log($scope.newRoom);
+		$scope.room = $('#building_word').html();
+		console.log($scope.room);
 		//enter the new room (factory handles page change)
-		roomFactory.addRoom($scope.newRoom);
-	}
+		roomFactory.enter($scope.room);
 
-	//enter pre-existing chat room
-	$scope.enter_room = function() {
-		// console.log('entering', $scope.roomname);
-		$scope.roomname = entering_roomname
-		roomFactory.enter(entering_roomname);
 	}
 
 	//submit new chat
@@ -88,7 +65,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		
 		//send message to server
 		// console.log('SUBMITTING');
-		socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message, 'room': $scope.roomname});
+		socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message});
 		$scope.loadScroll();
 		
 		$scope.message = '';
@@ -110,7 +87,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 	$scope.type_submit = function() {
 		// console.log($scope.message);
 		//send off new message
-		socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message, 'room': $scope.roomname});
+		socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message});
 		$scope.loadScroll();
 
 		$scope.message = '';
@@ -119,7 +96,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 	//logout!
 	$scope.logout = function() {
 		//tell socket there's been a "disconnet"
-		socketFactory.emit('logout', {'name': $scope.username, 'room': $scope.roomname});
+		socketFactory.emit('logout', {'name': $scope.username});
 		userFactory.logout();
 	}
 
@@ -129,9 +106,18 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 
 	//CONTROLLER LOGIC
 
+	//get name of current room from roomFactory
+	$scope.roomname = roomFactory.get_room();
 
+	//get names of all rooms from roomFactory
+	$scope.rooms = roomFactory.all_rooms();
+	console.log('ROOMS', $scope.rooms);
+
+	//get name of new user from socketFactory
+	$scope.username = userFactory.get_username();
+	console.log($scope.username);
 	//return to login page if no username
-	if ($scope.username == '' || $scope.username == ' ') {
+	if ($scope.username == '' || $scope.username = ' ') {
 		$location.path('/login');
 	} else if ($scope.roomname == '' || $scope.roomname == ' ') {
 
@@ -140,6 +126,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 			$location.path('/home');
 		}
 
+<<<<<<< HEAD
 		if ($location.path() == '/home') {
 			//on roompage? select a room!
 			//loop through rooms
@@ -153,6 +140,46 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		//on make new room page? refresh looping
 		if ($location.path() == '/new_room') {
 			//re-establish the looping!
+=======
+		//load button click and chat autoscroll to bottom
+		$scope.load = function() {
+			$('#blink-btn-chat').click(function() {
+				// console.log('clicked chat blink btn')
+				if (highlight_row != undefined && rowblink) {
+		            handle_blink();
+		        } else if (highlight_cell != undefined && !rowblink) {
+		            handle_blink();
+		        }
+			});
+		};
+		$scope.load();
+
+		$scope.loadScroll = function() {
+			$('#chats').stop().animate({
+			  scrollTop: $('#chats')[0].scrollHeight
+			}, 500);
+		}
+		$scope.loadScroll();
+
+
+		//submit new chat
+		$scope.submit = function() {
+			$scope.message = $('#building_word').html();
+			// console.log($scope.message);
+			
+			//send message to server
+			// console.log('SUBMITTING');
+			socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message});
+			
+			$scope.loadScroll();
+			$scope.message = '';
+			//clear out previous building_word
+			$('#building_word').html('');
+
+			//reestablish the looping! and un-highlight!
+			$(highlight_row).toggleClass('highlight_row');
+	        $(highlight_cell).toggleClass('highlight_cell');
+>>>>>>> 783ae8bc027f1b2df9adb1b80994e60c5c991223
 			highlight_row = undefined;
 		    highlight_cell = undefined;
 		    rowblink = true;
@@ -161,6 +188,7 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		    row_loop = setInterval(loopRows, INTERVAL);
 		}
 
+<<<<<<< HEAD
 		
 
 	} else if ($location.path() == '/new_room') {
@@ -181,21 +209,21 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 	
 	} else {
 
-		//IT'S TIME TO CHAT!
-
-
-		//connect to socket; tell which room to join
-		// console.log('chat time')
-		// socketFactory.on('connect', function() {
-		// 	console.log('client has connected');
-		// 	console.log($scope.roomname);
-		// });
-
 		$scope.loadScroll();
-		$scope.roomname = roomFactory.get_roomname();
-		//tell server that a new user was added to room
-		socketFactory.emit('add_new_user', {'name': $scope.username, 'room': $scope.roomname});
+		//tell server that a new user was added
+		socketFactory.emit('add_new_user', {'name': $scope.username});
 
+=======
+		//submit new chat via typing
+		$scope.type_submit = function() {
+			// console.log($scope.message);
+			//send off new message
+			socketFactory.emit('add_new_chat', {'name': $scope.username, 'chat': $scope.message});
+			$scope.loadScroll();
+			$scope.message = '';
+			
+		}
+>>>>>>> 783ae8bc027f1b2df9adb1b80994e60c5c991223
 
 		//re-establish the looping!
 		highlight_row = undefined;
@@ -211,14 +239,14 @@ app.controller('chatController', function($scope, $location, socketFactory, user
 		
 		//ask for all previously existing messages
 		//this seems to be getting called WITH EACH SUBMIT
-		socketFactory.emit('give_me_messages', {'room': $scope.roomname});
+		socketFactory.emit('give_me_messages', {});
 
 
 		//get all the messages
 		socketFactory.on('all_messages', function(data) {
 			//this is firing twice
+			// console.log('MESSAGES', data);
 			$scope.messages = data.messages;
-			// console.log('MESSAGES', $scope.messages);
 		});
 
 		//get newly added message
