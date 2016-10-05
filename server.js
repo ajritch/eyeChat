@@ -6,12 +6,13 @@ var fs = require('fs');
 
 var app = express();
 
-var options = {
-    key: fs.readFileSync('ssl/server.key'),
-    cert: fs.readFileSync('ssl/server.crt'),
-    requestCert: false,
-    rejectUnauthorized: false
-};
+//for https localhost
+// var options = {
+//     key: fs.readFileSync('ssl/server.key'),
+//     cert: fs.readFileSync('ssl/server.crt'),
+//     requestCert: false,
+//     rejectUnauthorized: false
+// };
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, './client')));
@@ -24,7 +25,12 @@ require('./server/config/mongoose.js');
 //module config and routing
 require('./server/config/routes.js')(app);
 
-var server = https.createServer(options, app).listen(7000, function() {
+//for https localhost
+// var server = https.createServer(options, app).listen(7000, function() {
+// 	console.log('listening on port 7000');
+// });
+
+var server = app.listen(7000, function() {
 	console.log('listening on port 7000');
 });
 
